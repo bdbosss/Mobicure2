@@ -11,8 +11,8 @@ export default function Reparation({ setActiveTab, setPreselectedDevice }: Repar
   const [selectedCategory, setSelectedCategory] = useState<'smartphones' | 'tablets' | 'computers'>('smartphones');
   
   // Interactive estimator state
-  const [estimatorBrand, setEstimatorBrand] = useState('Apple');
-  const [estimatorModel, setEstimatorModel] = useState('iPhone 13');
+  const [estimatorBrand, setEstimatorBrand] = useState('');
+  const [estimatorModel, setEstimatorModel] = useState('');
   const [estimatorIssue, setEstimatorIssue] = useState('Vitre / Écran cassé');
 
   const popularModelsMap = {
@@ -43,9 +43,11 @@ export default function Reparation({ setActiveTab, setPreselectedDevice }: Repar
 
   // Simple simulator pricing maps
   const getEstimatedPrice = () => {
+    const brandLower = estimatorBrand.toLowerCase();
+    const isApple = brandLower.includes('apple') || brandLower.includes('iphone') || brandLower.includes('ipad') || brandLower.includes('mac');
     if (selectedCategory === 'smartphones') {
       if (estimatorIssue === 'Vitre / Écran cassé') {
-        return estimatorBrand === 'Apple' ? 'À partir de 69€' : 'À partir de 59€';
+        return isApple ? 'À partir de 69€' : 'À partir de 59€';
       }
       if (estimatorIssue === 'Batterie à remplacer') {
         return '39€ - 59€';
@@ -85,7 +87,8 @@ export default function Reparation({ setActiveTab, setPreselectedDevice }: Repar
 
   const handleBookRepair = () => {
     if (setPreselectedDevice) {
-      setPreselectedDevice(`${estimatorBrand} ${estimatorModel} (${estimatorIssue})`);
+      const deviceStr = [estimatorBrand.trim(), estimatorModel.trim()].filter(Boolean).join(' ');
+      setPreselectedDevice(`${deviceStr || 'Appareil'} (${estimatorIssue})`);
     }
     setActiveTab('contact');
     window.scrollTo({ top: 1200, behavior: 'smooth' }); // Scroll to contact form
@@ -122,10 +125,9 @@ export default function Reparation({ setActiveTab, setPreselectedDevice }: Repar
                 key={cat}
                 onClick={() => {
                   setSelectedCategory(cat);
-                  // Update estimator models and issue automatically
-                  const firstBrand = popularModelsMap[cat === 'smartphones' ? 'Smartphones' : cat === 'tablets' ? 'Tablettes' : 'Ordinateurs'][0];
-                  setEstimatorBrand(firstBrand.brand);
-                  setEstimatorModel(firstBrand.models[0]);
+                  // Reset brand and model so the box starts empty and the user can fill it
+                  setEstimatorBrand('');
+                  setEstimatorModel('');
                 }}
                 className={`flex-1 py-3 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer ${
                   isSelected
@@ -223,35 +225,27 @@ export default function Reparation({ setActiveTab, setPreselectedDevice }: Repar
                 {/* Brand select */}
                 <div className="flex flex-col gap-1.5">
                   <label className="text-xs font-bold text-zinc-300 uppercase">Marque de l'appareil</label>
-                  <select
+                  <input
+                    type="text"
                     value={estimatorBrand}
-                    onChange={(e) => {
-                      setEstimatorBrand(e.target.value);
-                      const bData = currentModelsData.find(x => x.brand === e.target.value);
-                      if (bData && bData.models.length > 0) {
-                        setEstimatorModel(bData.models[0]);
-                      }
-                    }}
-                    className="bg-zinc-900 border border-zinc-800 text-white rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-red-600 select-hide cursor-pointer"
-                  >
-                    {currentModelsData.map((b) => (
-                      <option key={b.brand} value={b.brand}>{b.brand}</option>
-                    ))}
-                  </select>
+                    onChange={(e) => setEstimatorBrand(e.target.value)}
+                    placeholder="Saisissez la marque..."
+                    className="bg-zinc-900 border border-zinc-800 text-white rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-red-600 w-full"
+                    id="estimator-brand-input"
+                  />
                 </div>
 
                 {/* Model select */}
                 <div className="flex flex-col gap-1.5">
                   <label className="text-xs font-bold text-zinc-300 uppercase">Modèle exact</label>
-                  <select
+                  <input
+                    type="text"
                     value={estimatorModel}
                     onChange={(e) => setEstimatorModel(e.target.value)}
-                    className="bg-zinc-900 border border-zinc-800 text-white rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-red-600 cursor-pointer"
-                  >
-                    {(currentModelsData.find(x => x.brand === estimatorBrand)?.models || []).map((m) => (
-                      <option key={m} value={m}>{m}</option>
-                    ))}
-                  </select>
+                    placeholder="Saisissez le modèle..."
+                    className="bg-zinc-900 border border-zinc-800 text-white rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-red-600 w-full"
+                    id="estimator-model-input"
+                  />
                 </div>
 
                 {/* Problem type */}
