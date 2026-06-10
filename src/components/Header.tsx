@@ -27,14 +27,22 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
       <div className="w-full bg-zinc-950 text-white text-[11px] font-bold uppercase tracking-widest py-2 px-4 border-b border-zinc-900">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-zinc-300">
-            <span className="flex items-center gap-1.5">
+            <a 
+              href="https://maps.app.goo.gl/uh7b2bZeafx5p38N6" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="flex items-center gap-1.5 hover:text-red-500 transition-colors"
+            >
               <MapPin className="w-3.5 h-3.5 text-red-600" />
               42 Avenue Jean Jaurès, 93350 Le Bourget
-            </span>
-            <span className="hidden md:flex items-center gap-1.5">
+            </a>
+            <a 
+              href="tel:+33644664404" 
+              className="hidden md:flex items-center gap-1.5 hover:text-red-500 transition-colors"
+            >
               <Phone className="w-3.5 h-3.5 text-red-600" />
               +33 6 44 66 44 04
-            </span>
+            </a>
           </div>
           <div className="flex items-center gap-4">
             <span className="bg-red-600 text-white font-black px-2 py-0.5 rounded-sm text-[9px] tracking-widest uppercase">

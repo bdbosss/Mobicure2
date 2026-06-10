@@ -86,7 +86,7 @@ export default function Footer({ setActiveTab }: FooterProps) {
           </h3>
           <div className="flex flex-col gap-3 text-sm text-zinc-400">
             <a 
-              href="https://maps.google.com/?q=42+Avenue+Jean+Jaures,+93350+Le+Bourget" 
+              href="https://maps.app.goo.gl/uh7b2bZeafx5p38N6" 
               target="_blank" 
               referrerPolicy="no-referrer" 
               className="flex items-start gap-2.5 hover:text-red-500 transition-colors"
@@ -135,7 +135,14 @@ export default function Footer({ setActiveTab }: FooterProps) {
         <div>
           <p>© {new Date().getFullYear()} MOBICURE. Tous droits réservés.</p>
           <p className="mt-1">
-            42 Avenue Jean Jaurès, 93350 Le Bourget — Téléphone: +33 6 44 66 44 04
+            <a 
+              href="https://maps.app.goo.gl/uh7b2bZeafx5p38N6" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="hover:text-red-500 hover:underline transition-colors"
+            >
+              42 Avenue Jean Jaurès, 93350 Le Bourget
+            </a> — Téléphone: <a href="tel:+33644664404" className="hover:text-red-500 hover:underline">+33 6 44 66 44 04</a>
           </p>
           <p className="mt-2.5">
             <button

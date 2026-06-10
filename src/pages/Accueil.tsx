@@ -330,7 +330,14 @@ export default function Accueil({ setActiveTab }: AccueilProps) {
               <div>
                 <h4 className="font-extrabold text-zinc-950">Où nous trouver ?</h4>
                 <p className="text-zinc-500 text-xs mt-0.5">
-                  42 Avenue Jean Jaurès, 93350 Le Bourget (Près des transports)
+                  <a 
+                    href="https://maps.app.goo.gl/uh7b2bZeafx5p38N6" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-red-650 font-bold hover:underline transition-colors"
+                  >
+                    42 Avenue Jean Jaurès, 93350 Le Bourget
+                  </a> (Près des transports)
                 </p>
               </div>
             </div>

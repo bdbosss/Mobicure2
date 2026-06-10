@@ -192,7 +192,7 @@ export default function TermsModal({ isOpen, onClose }: TermsModalProps) {
                 </div>
 
                 <div className="p-4 bg-zinc-100 rounded-xl mb-6 text-xs text-zinc-600 font-medium">
-                  Les présentes conditions de réparation sont mises en œuvre par la société <strong>MOBICURE</strong>, domiciliée 42 Avenue Jean Jaurès, 93350 Le Bourget. Elles régissent les prestations de réparation effectuées dans les points de vente MOBICURE en France métropolitaine. Toute demande de réparation est soumise aux présentes Conditions Générales de Réparation (CGR), consultables sur <a href="https://www.mobicure.fr" target="_blank" rel="noopener noreferrer" className="text-red-600 underline font-semibold">www.mobicure.fr</a> et en magasin.
+                  Les présentes conditions de réparation sont mises en œuvre par la société <strong>MOBICURE</strong>, domiciliée <a href="https://maps.app.goo.gl/uh7b2bZeafx5p38N6" target="_blank" rel="noopener noreferrer" className="text-red-600 underline font-semibold">42 Avenue Jean Jaurès, 93350 Le Bourget</a>. Elles régissent les prestations de réparation effectuées dans les points de vente MOBICURE en France métropolitaine. Toute demande de réparation est soumise aux présentes Conditions Générales de Réparation (CGR), consultables sur <a href="https://www.mobicure.fr" target="_blank" rel="noopener noreferrer" className="text-red-600 underline font-semibold">www.mobicure.fr</a> et en magasin.
                   <p className="mt-2 text-zinc-850 font-bold">
                     Les présentes CGR s’appliquent uniquement aux consommateurs.
                   </p>

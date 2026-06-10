@@ -140,7 +140,7 @@ export default function Contact({ preselectedDevice, onClearPreselectedDevice }:
                 <div>
                   <h4 className="font-extrabold text-sm text-zinc-950 uppercase tracking-wide">Notre Boutique</h4>
                   <a 
-                    href="https://maps.google.com/?q=42+Avenue+Jean+Jaures,+93350+Le+Bourget" 
+                    href="https://maps.app.goo.gl/uh7b2bZeafx5p38N6" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-xs text-zinc-500 hover:text-red-600 transition-colors mt-1 block leading-normal"
@@ -232,10 +232,17 @@ export default function Contact({ preselectedDevice, onClearPreselectedDevice }:
                 </div>
                 <div className="bg-white px-4 py-2.5 rounded-xl shadow-md border border-zinc-150 max-w-[240px]">
                   <span className="font-extrabold text-xs text-zinc-950 block">MOBICURE Le Bourget</span>
-                  <span className="text-[10px] text-zinc-400 block mt-0.5">42 Avenue Jean Jaurès, 93350</span>
+                  <a 
+                    href="https://maps.app.goo.gl/uh7b2bZeafx5p38N6"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[10px] text-zinc-400 hover:text-red-500 block mt-0.5 underline transition-colors"
+                  >
+                    42 Avenue Jean Jaurès, 93350
+                  </a>
                 </div>
                 <a 
-                  href="https://maps.google.com/?q=42+Avenue+Jean+Jaures,+93350+Le+Bourget" 
+                  href="https://maps.app.goo.gl/uh7b2bZeafx5p38N6" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="text-[10px] font-black text-red-650 hover:underline mt-1 bg-white hover:bg-zinc-50 px-3 py-1.5 rounded-lg shadow-xs border border-zinc-200"
