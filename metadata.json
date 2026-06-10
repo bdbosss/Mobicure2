@@ -1,0 +1,6 @@
+{
+  "name": "MOBICURE",
+  "description": "Boutique spécialisée en réparation de smartphones, tablettes et ordinateurs, et vente d'accessoires de qualité.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
