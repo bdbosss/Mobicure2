@@ -1,12 +1,14 @@
 import React from 'react';
 import { Smartphone, Laptop, Tablet, ShieldCheck, Zap, Clock, ThumbsUp, MapPin, Phone, MessageSquare, ArrowRight, Wrench } from 'lucide-react';
 import { clientReviews } from '../data';
+import { useLanguage } from '../lib/LanguageContext';
 
 interface AccueilProps {
   setActiveTab: (tab: string) => void;
 }
 
 export default function Accueil({ setActiveTab }: AccueilProps) {
+  const { t, isRtl, language } = useLanguage();
   return (
     <div id="page-accueil" className="w-full bg-white text-zinc-950 animate-in fade-in duration-300">
       
@@ -19,15 +21,27 @@ export default function Accueil({ setActiveTab }: AccueilProps) {
           <div className="lg:col-span-7 flex flex-col items-start gap-6 text-left">
             <div className="inline-flex items-center gap-2 bg-red-655 text-white border border-zinc-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] px-4 py-1.5 text-xs font-black uppercase tracking-widest">
               <Zap className="w-4 h-4 shrink-0" />
-              Réparation Express au Bourget (93)
+              {t('nav.serviceNoRdv')}
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tighter text-zinc-950 leading-none">
-              Donnez une <br className="hidden sm:block" />seconde vie à vos <span className="text-red-655 inline-block bg-white border border-zinc-950 px-2 py-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform -rotate-1">appareils.</span>
+              {language === 'FR' ? (
+                <>Donnez une <br className="hidden sm:block" />seconde vie à vos <span className="text-red-655 inline-block bg-white border border-zinc-950 px-2 py-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform -rotate-1">appareils.</span></>
+              ) : language === 'EN' ? (
+                <>Give a <br className="hidden sm:block" />second life to your <span className="text-red-655 inline-block bg-white border border-zinc-950 px-2 py-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform -rotate-1">devices.</span></>
+              ) : language === 'ES' ? (
+                <>Dele una <br className="hidden sm:block" />segunda vida a sus <span className="text-red-655 inline-block bg-white border border-zinc-950 px-2 py-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform -rotate-1">dispositivos.</span></>
+              ) : language === 'IT' ? (
+                <>Dai una <br className="hidden sm:block" />seconda vita ai tuoi <span className="text-red-655 inline-block bg-white border border-zinc-950 px-2 py-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform -rotate-1">dispositivi.</span></>
+              ) : language === 'RU' ? (
+                <>Дайте <br className="hidden sm:block" />вторую жизнь вашим <span className="text-red-655 inline-block bg-white border border-zinc-950 px-2 py-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform -rotate-1">устройствам.</span></>
+              ) : (
+                <>أعطِ <br className="hidden sm:block" />حياة ثانية <span className="text-red-655 inline-block bg-white border border-zinc-950 px-2 py-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform -rotate-1">لأجهزتك.</span></>
+              )}
             </h1>
             
             <p className="text-base sm:text-lg text-zinc-800 max-w-2xl leading-relaxed font-semibold">
-              Spécialiste de la réparation de <strong className="text-red-600 font-extrabold uppercase">SMARTPHONES</strong>, <strong className="text-zinc-950 font-extrabold uppercase">TABLETTES</strong> et <strong className="text-zinc-950 font-extrabold uppercase">ORDINATEURS (MARQUES)</strong> au Bourget. Pièces d'origine ou Compatible et haute qualité à prix transparents.
+              {t('hero.subtitle')}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mt-4">
@@ -36,7 +50,7 @@ export default function Accueil({ setActiveTab }: AccueilProps) {
                 id="hero-cta-repair"
                 className="w-full sm:w-auto px-8 py-4 bg-zinc-950 hover:bg-red-600 text-white text-xs font-black uppercase tracking-widest border border-zinc-950 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[3px] hover:translate-y-[3px] transition-all flex items-center justify-center gap-2 cursor-pointer group"
               >
-                <span>Faire réparer mon appareil</span>
+                <span>{t('btn.bookRepairShort')}</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
               
@@ -45,7 +59,7 @@ export default function Accueil({ setActiveTab }: AccueilProps) {
                 id="hero-cta-contact"
                 className="w-full sm:w-auto px-8 py-4 bg-white border border-zinc-950 text-zinc-950 hover:bg-zinc-50 text-xs font-black uppercase tracking-widest shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[3px] hover:translate-y-[3px] transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
-                <span>Devis & Contact</span>
+                <span>{t('nav.contact')}</span>
               </button>
             </div>
 
@@ -53,7 +67,7 @@ export default function Accueil({ setActiveTab }: AccueilProps) {
             <div className="grid grid-cols-3 gap-6 pt-8 border-t-2 border-zinc-950 w-full mt-6">
               <div className="text-left">
                 <span className="block text-3xl sm:text-4xl font-black text-red-600">30 MIN</span>
-                <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest block mt-1">Délai Moyen</span>
+                <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest block mt-1">{t('banner.repairTime')}</span>
               </div>
               <div className="text-left">
                 <span className="block text-3xl sm:text-4xl font-black text-zinc-950">100%</span>
@@ -61,7 +75,7 @@ export default function Accueil({ setActiveTab }: AccueilProps) {
               </div>
               <div className="text-left">
                 <span className="block text-3xl sm:text-4xl font-black text-red-655">GARANTIE</span>
-                <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest block mt-1">JUSQU'À 2 MOIS*</span>
+                <span className="text-[10px] font-black text-zinc-500 uppercase tracking-widest block mt-1">{t('banner.guarantee')}</span>
               </div>
             </div>
           </div>
@@ -203,9 +217,9 @@ export default function Accueil({ setActiveTab }: AccueilProps) {
               <div className="w-10 h-10 rounded-lg bg-red-600 text-white flex items-center justify-center font-bold text-sm mb-6">
                 1
               </div>
-              <h3 className="font-extrabold text-lg text-zinc-950 mb-2">Diagnostic Gratuit*</h3>
+              <h3 className="font-extrabold text-lg text-zinc-950 mb-2">{t('step.1')}</h3>
               <p className="text-sm text-zinc-500 leading-relaxed">
-                Apportez votre appareil en magasin au Bourget. Nous évaluons immédiatement la panne et préparons un devis gratuit.
+                {t('step.1Desc')}
               </p>
             </div>
 
@@ -215,9 +229,9 @@ export default function Accueil({ setActiveTab }: AccueilProps) {
               <div className="w-10 h-10 rounded-lg bg-zinc-950 text-white flex items-center justify-center font-bold text-sm mb-6">
                 2
               </div>
-              <h3 className="font-extrabold text-lg text-zinc-950 mb-2">Pièce & Réparation</h3>
+              <h3 className="font-extrabold text-lg text-zinc-950 mb-2">{t('step.2')}</h3>
               <p className="text-sm text-zinc-500 leading-relaxed">
-                Après votre accord, notre technicien certifié répare l'appareil sur place. 80% des réparations durent moins de 30 mins.
+                {t('step.2Desc')}
               </p>
             </div>
 
@@ -227,9 +241,9 @@ export default function Accueil({ setActiveTab }: AccueilProps) {
               <div className="w-10 h-10 rounded-lg bg-red-600 text-white flex items-center justify-center font-bold text-sm mb-6">
                 3
               </div>
-              <h3 className="font-extrabold text-lg text-zinc-950 mb-2">Tests de Qualité</h3>
+              <h3 className="font-extrabold text-lg text-zinc-950 mb-2">{t('step.3')}</h3>
               <p className="text-sm text-zinc-500 leading-relaxed">
-                Nous vérifions rigoureusement chaque fonction d'affichage, de charge, de boutons et de réseaux avant restitution.
+                {t('step.3Desc')}
               </p>
             </div>
 
@@ -239,9 +253,9 @@ export default function Accueil({ setActiveTab }: AccueilProps) {
               <div className="w-10 h-10 rounded-lg bg-zinc-950 text-white flex items-center justify-center font-bold text-sm mb-6">
                 4
               </div>
-              <h3 className="font-extrabold text-lg text-zinc-950 mb-2">Garantie Activée</h3>
+              <h3 className="font-extrabold text-lg text-zinc-950 mb-2">{t('step.4')}</h3>
               <p className="text-sm text-zinc-500 leading-relaxed">
-                Récupérez votre appareil remis à neuf ! Bénéficiez d'une garantie* de 2 mois sur l'intervention.
+                {t('step.4Desc')}
               </p>
             </div>
 

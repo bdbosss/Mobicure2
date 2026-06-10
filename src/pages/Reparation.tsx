@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Smartphone, Tablet, Monitor, Info, Clock, CheckCircle2, AlertOctagon, HelpCircle, ArrowRight } from 'lucide-react';
 import { repairCategories } from '../data';
+import { useLanguage } from '../lib/LanguageContext';
 
 interface ReparationProps {
   setActiveTab: (tab: string) => void;
@@ -8,6 +9,7 @@ interface ReparationProps {
 }
 
 export default function Reparation({ setActiveTab, setPreselectedDevice }: ReparationProps) {
+  const { t, language } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<'smartphones' | 'tablets' | 'computers'>('smartphones');
   
   // Interactive estimator state
@@ -103,13 +105,25 @@ export default function Reparation({ setActiveTab, setPreselectedDevice }: Repar
       <section className="bg-zinc-50 border-b border-zinc-100 py-12 text-center">
         <div className="max-w-7xl mx-auto px-4 flex flex-col items-center gap-3">
           <div className="bg-red-100 text-red-650 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
-            Tarifs transparents & abordables
+            {t('banner.freeQuote')}
           </div>
           <h1 className="text-3xl sm:text-5xl font-extrabold text-zinc-950">
-            Services de <span className="text-red-600">Réparation</span>
+            {language === 'FR' ? (
+              <>Services de <span className="text-red-600">Réparation</span></>
+            ) : language === 'EN' ? (
+              <>Our <span className="text-red-600">Repair</span> Services</>
+            ) : language === 'ES' ? (
+              <>Servicios de <span className="text-red-600">Reparación</span></>
+            ) : language === 'IT' ? (
+              <>Servizi di <span className="text-red-600">Riparazione</span></>
+            ) : language === 'RU' ? (
+              <>Услуги по <span className="text-red-650">ремонту</span></>
+            ) : (
+              <>خدمات <span className="text-red-600">الإصلاح</span> المعتمدة</>
+            )}
           </h1>
           <p className="text-zinc-650 max-w-2xl text-sm sm:text-base">
-            Chez MOBICURE, nous combinons des pièces haut de gamme avec une main-d'œuvre qualifiée pour redonner vie à vos outils de travail et de loisir le jour même.
+            {t('rep.subtitle')}
           </p>
         </div>
       </section>
@@ -216,20 +230,20 @@ export default function Reparation({ setActiveTab, setPreselectedDevice }: Repar
           <div className="lg:col-span-5">
             <div className="bg-zinc-950 text-white rounded-2xl p-6 sm:p-8 shrink-0 sticky top-36 border border-zinc-800">
               <div className="flex flex-col gap-1 mb-6 text-left border-b border-zinc-800 pb-4">
-                <span className="text-red-500 font-extrabold text-[10px] uppercase tracking-widest font-mono">Outil Interactif</span>
-                <h2 className="text-lg font-black tracking-tight uppercase">Estimer le prix en direct</h2>
-                <p className="text-xs text-zinc-400">Configurez votre appareil pour obtenir une estimation de tarif immédiat.</p>
+                <span className="text-red-500 font-extrabold text-[10px] uppercase tracking-widest font-mono">{t('rep.estimateDetails')}</span>
+                <h2 className="text-lg font-black tracking-tight uppercase">{t('rep.title')}</h2>
+                <p className="text-xs text-zinc-400">{t('rep.subtitle')}</p>
               </div>
 
               <div className="flex flex-col gap-4 text-left">
                 {/* Brand select */}
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-zinc-300 uppercase">Marque de l'appareil</label>
+                  <label className="text-xs font-bold text-zinc-300 uppercase">{t('rep.brand')}</label>
                   <input
                     type="text"
                     value={estimatorBrand}
                     onChange={(e) => setEstimatorBrand(e.target.value)}
-                    placeholder="Saisissez la marque..."
+                    placeholder={t('rep.brandPlaceholder')}
                     className="bg-zinc-900 border border-zinc-800 text-white rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-red-600 w-full"
                     id="estimator-brand-input"
                   />
@@ -237,12 +251,12 @@ export default function Reparation({ setActiveTab, setPreselectedDevice }: Repar
 
                 {/* Model select */}
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-zinc-300 uppercase">Modèle exact</label>
+                  <label className="text-xs font-bold text-zinc-300 uppercase">{t('rep.model')}</label>
                   <input
                     type="text"
                     value={estimatorModel}
                     onChange={(e) => setEstimatorModel(e.target.value)}
-                    placeholder="Saisissez le modèle..."
+                    placeholder={t('rep.modelPlaceholder')}
                     className="bg-zinc-900 border border-zinc-800 text-white rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-red-600 w-full"
                     id="estimator-model-input"
                   />

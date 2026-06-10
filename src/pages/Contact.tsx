@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin, Phone, MessageCircle, Mail, Send, Clock, CheckCircle2, ShieldCheck, AlertCircle } from 'lucide-react';
 import { businessHours } from '../data';
+import { useLanguage } from '../lib/LanguageContext';
 
 interface ContactProps {
   preselectedDevice?: string;
@@ -8,6 +9,7 @@ interface ContactProps {
 }
 
 export default function Contact({ preselectedDevice, onClearPreselectedDevice }: ContactProps) {
+  const { t, language } = useLanguage();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -104,13 +106,25 @@ export default function Contact({ preselectedDevice, onClearPreselectedDevice }:
       <section className="bg-zinc-50 border-b border-zinc-100 py-12 text-center">
         <div className="max-w-7xl mx-auto px-4 flex flex-col items-center gap-3">
           <div className="bg-red-100 text-red-650 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
-            Assistance & Devis gratuit immédiat
+            {t('banner.freeQuote')}
           </div>
           <h1 className="text-3xl sm:text-5xl font-extrabold text-zinc-950">
-            Contactez <span className="text-red-600">MOBICURE</span>
+            {language === 'FR' ? (
+              <>Contactez <span className="text-red-600">MOBICURE</span></>
+            ) : language === 'EN' ? (
+              <>Contact <span className="text-red-600">MOBICURE</span></>
+            ) : language === 'ES' ? (
+              <>Contacte a <span className="text-red-600">MOBICURE</span></>
+            ) : language === 'IT' ? (
+              <>Contatti <span className="text-red-600">MOBICURE</span></>
+            ) : language === 'RU' ? (
+              <>Свяжитесь с <span className="text-red-650">MOBICURE</span></>
+            ) : (
+              <>اتصل بنا في <span className="text-red-600">MOBICURE</span></>
+            )}
           </h1>
           <p className="text-zinc-650 max-w-2xl text-sm sm:text-base">
-            Notre équipe se tient mobilisée pour répondre à vos interrogations matérielles et logicielles dans les plus brefs délais. Écrivez-nous ou passez en magasin !
+            {t('con.subtitle')}
           </p>
         </div>
       </section>

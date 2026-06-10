@@ -1,0 +1,635 @@
+import React, { createContext, useContext, useState, useEffect } from 'react';
+
+export type Language = 'FR' | 'EN' | 'ES' | 'IT' | 'RU' | 'AR';
+
+interface LanguageContextType {
+  language: Language;
+  setLanguage: (lang: Language) => void;
+  t: (key: string) => string;
+  isRtl: boolean;
+}
+
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
+const translations: Record<Language, Record<string, string>> = {
+  FR: {
+    // Navigation / Header
+    'nav.accueil': 'Accueil',
+    'nav.reparation': 'Réparation',
+    'nav.accessoires': 'Accessoires',
+    'nav.contact': 'Contact',
+    'nav.serviceNoRdv': 'Service sans rdv',
+    'nav.hours': 'LUN - JEUDI: 9H15 - 21H30',
+    'nav.whatsappTitle': 'WHATSAPP : +33 6 44 66 44 04',
+    'nav.subTitle': 'Réparation & Accessoires',
+    
+    // General Buttons
+    'btn.learnMore': 'En savoir plus',
+    'btn.contactUs': 'Contactez-nous',
+    'btn.bookRepair': 'Prendre RDV / Devis Gratuit',
+    'btn.bookRepairShort': 'Prendre RDV',
+    'btn.discover': 'Découvrir la boutique',
+    'btn.estimation': 'Obtenir un devis en 30s',
+    'btn.confirmBooking': 'Confirmer ma réservation',
+    'btn.knowMore': "J'ai pris connaissance",
+    'btn.submitForm': 'Envoyer ma demande',
+    'btn.addToCart': 'Réserver cet article',
+    'btn.alreadyAdded': 'Déjà réservé',
+    'btn.printPDF': 'Imprimer / PDF',
+
+    // Quick banners / Hero / Trust
+    'banner.freeQuote': 'DEVIS 100% GRATUIT',
+    'banner.repairTime': 'RÉPARATION 30 MIN',
+    'banner.guarantee': 'GARANTIE 2 MOIS',
+    'hero.title': 'VOTRE SMARTPHONE RÉPARÉ EN 30 MINUTES CHRONO !',
+    'hero.subtitle': 'Spécialiste de la réparation de smartphones, tablettes et ordinateurs au Bourget. Devis gratuit immédiat, pièces de qualité supérieure, intervention ultra-rapide.',
+    
+    // Welcome Page Section headings
+    'section.whyUs': 'POURQUOI NOUS CHOISIR ?',
+    'section.whyUsSub': 'Un service premium conçu pour simplifier la vie de vos appareils.',
+    'section.howItWorks': 'COMMENT ÇA MARCHE ?',
+    'section.howItWorksSub': 'Votre parcours de réparation en 4 étapes simples et limpides.',
+    'section.reviews': 'CE QUE NOS CLIENTS DISENT',
+    'section.reviewsSub': 'Des retours authentiques qui témoignent de notre rigueur.',
+    
+    // Cards Why Us
+    'why.speed': 'Devis & Réparation Express',
+    'why.speedDesc': 'Diagnostic immédiat et réparation sur place en moins de 30 minutes pour la majorité des pannes.',
+    'why.quality': 'Pièces de Haute Qualité',
+    'why.qualityDesc': 'Nous sélectionnons rigoureusement des écrans, vitres et batteries certifiés durables.',
+    'why.guarantee': 'Garantie Activée',
+    'why.guaranteeDesc': "Récupérez votre appareil remis à neuf ! Bénéficiez d'une garantie* de 2 mois sur l'intervention.",
+    'why.bestPrice': 'Meilleurs Prix Garantis',
+    'why.bestPriceDesc': 'Tarifs transparents sans frais cachés, alignés sur les prix du marché avec un devis gratuit.',
+
+    // Steps
+    'step.1': 'Diagnostic',
+    'step.1Desc': 'Analyse complète de la panne et chiffrage 100% gratuit.',
+    'step.2': 'Prise en charge',
+    'step.2Desc': 'Dépôt immédiat sans rendez-vous ou réservation programmée.',
+    'step.3': 'Réparation rapide',
+    'step.3Desc': 'Intervention ultra-rapide par nos techniciens qualifiés sous vos yeux.',
+    'step.4': 'Restitution & Garantie',
+    'step.4Desc': 'Tests rigoureux de validation de bon fonctionnement de l\'appareil.',
+
+    // Reparation Screen
+    'rep.title': 'ESTIMATEUR DE TARIF DE RÉPARATION',
+    'rep.subtitle': 'Sélectionnez votre type d\'appareil, indiquez la marque, le modèle précis et le problème rencontré pour obtenir une estimation immédiate de l\'intervention.',
+    'rep.brand': "Marque de l'appareil",
+    'rep.model': 'Modèle exact',
+    'rep.issue': 'Type de dysfonctionnement',
+    'rep.brandPlaceholder': 'Saisissez la marque...',
+    'rep.modelPlaceholder': 'Saisissez le modèle...',
+    'rep.estPrice': 'Estimation du prix :',
+    'rep.chooseCategory': 'Étape 1 : Choisissez votre catégorie d\'appareil',
+    'rep.estimateDetails': 'Étape 2 : Spécifiez les détails pour le devis',
+    'rep.popularServices': 'Nos services de réparation populaires',
+    
+    // Accessories Screen
+    'acc.title': 'NOTRE BOUTIQUE D\'ACCESSOIRES EN LIGNE',
+    'acc.subtitle': 'Une sélection premium de coques de protection renforcées, de vitres trempées haute résistance, de câbles et de chargeurs rapides. Réservez en ligne et récupérez vos articles en boutique.',
+    'acc.search': 'Rechercher un accessoire (ex: iPhone, Chargeur, Coque)...',
+    'acc.all': 'Tous nos articles',
+    'acc.favorites': 'Vos favoris',
+    'acc.noResults': 'Aucun accessoire ne correspond à vos critères',
+    'acc.secureReserve': 'Aucun paiement en ligne requis ! Vous réglez sur place lors de la récupération.',
+
+    // Contact Screen
+    'con.title': 'CONTACTEZ-NOUS & PRENEZ RENDEZ-VOUS',
+    'con.subtitle': 'Une question ? Un devis spécifique ? Remplissez le formulaire en 1 minute ou contactez directement notre équipe par WhatsApp ou téléphone.',
+    'con.formTitle': 'Envoyer un message',
+    'con.nameLabel': 'Nom complet',
+    'con.namePlaceholder': 'Saisissez votre nom',
+    'con.phoneLabel': 'Numéro de téléphone',
+    'con.phonePlaceholder': '+33 6 12 34 56 78',
+    'con.emailLabel': 'Adresse E-mail',
+    'con.emailPlaceholder': 'nom@exemple.com',
+    'con.deviceLabel': 'Appareil / Modèle (facultatif)',
+    'con.devicePlaceholder': 'Ex: iPhone 13 Pro Max ou MacBook Pro 2021',
+    'con.remarksLabel': 'Précisions sur la panne / Votre demande',
+    'con.remarksPlaceholder': 'Décrivez au mieux le problème rencontré...',
+    'con.successMsg': 'Votre message a bien été envoyé ! Notre équipe vous répondra dans les plus brefs délais.',
+    
+    // Footer / General Coordinates
+    'foot.rights': 'Tous droits réservés.',
+    'foot.where': 'Où nous trouver ?',
+    'foot.hoursTitle': 'Horaires d\'ouverture',
+    'foot.links': 'Liens rapides',
+    'foot.address': '42 Avenue Jean Jaurès, 93350 Le Bourget',
+  },
+  EN: {
+    'nav.accueil': 'Home',
+    'nav.reparation': 'Repairs',
+    'nav.accessoires': 'Shop Accessories',
+    'nav.contact': 'Contact Us',
+    'nav.serviceNoRdv': 'No appointment needed',
+    'nav.hours': 'MON - THURS: 9:15 AM - 9:30 PM',
+    'nav.whatsappTitle': 'WHATSAPP: +33 6 44 66 44 04',
+    'nav.subTitle': 'Repairs & Accessories',
+
+    'btn.learnMore': 'Learn more',
+    'btn.contactUs': 'Contact us',
+    'btn.bookRepair': 'Book Appointment / Free Quote',
+    'btn.bookRepairShort': 'Book Appointment',
+    'btn.discover': 'Explore the shop',
+    'btn.estimation': 'Get a quote in 30s',
+    'btn.confirmBooking': 'Confirm my reservation',
+    'btn.knowMore': 'I understand',
+    'btn.submitForm': 'Send my request',
+    'btn.addToCart': 'Reserve this item',
+    'btn.alreadyAdded': 'Already reserved',
+    'btn.printPDF': 'Print / PDF',
+
+    'banner.freeQuote': '100% FREE QUOTE',
+    'banner.repairTime': '30 MIN REPAIR',
+    'banner.guarantee': '2 MONTH RESELL WARRANTY',
+    'hero.title': 'YOUR SMARTPHONE REPAIRED IN JUST 30 MINUTES!',
+    'hero.subtitle': 'Professional repair service for smartphones, tablets, and computers in Le Bourget. Immediate free quote, high-quality spare parts, ultra-fast intervention.',
+
+    'section.whyUs': 'WHY CHOOSE US?',
+    'section.whyUsSub': 'Premium service designed to make your device diagnostics and repair stress-free.',
+    'section.howItWorks': 'HOW IT WORKS',
+    'section.howItWorksSub': 'Your easy repair process in 4 simple and completely transparent steps.',
+    'section.reviews': 'WHAT OUR CUSTOMERS SAY',
+    'section.reviewsSub': 'Real feedback reflecting our high standard of repair craft.',
+
+    'why.speed': 'Express Diagnostics & Repairs',
+    'why.speedDesc': 'Immediate analysis and on-site repair in under 30 minutes for most system faults.',
+    'why.quality': 'High Quality Components',
+    'why.qualityDesc': 'We strictly source and select durable, certified screens, glass, and rechargeable batteries.',
+    'why.guarantee': 'Active Repair Warranty',
+    'why.guaranteeDesc': 'Get your restored device back! Enjoy a 2-month warranty* covering the complete intervention.',
+    'why.bestPrice': 'Best Prices Guaranteed',
+    'why.bestPriceDesc': 'Clear and simple transparent pricing, tailored around local market rates with zero hidden fees.',
+
+    'step.1': 'Complete Diagnosis',
+    'step.1Desc': 'Our specialists analyze the device and provide a 100% free repair quote.',
+    'step.2': 'Booking / Drop-off',
+    'step.2Desc': 'Bring your device directly to the store with no appointment, or book online.',
+    'step.3': 'Fast Intervention',
+    'step.3Desc': 'Ultra-fast repairs handled live by our skilled on-site specialists.',
+    'step.4': 'Return & Warranty',
+    'step.4Desc': 'Rigorous hardware validated checks before the final pickup of your product.',
+
+    'rep.title': 'REPAIR PRICE ESTIMATOR',
+    'rep.subtitle': 'Choose your device category, enter the brand name, exact model and issues faced for an instant custom estimate of the repair costs.',
+    'rep.brand': 'Device Brand',
+    'rep.model': 'Exact Model Name',
+    'rep.issue': 'Type of Issue/Fault',
+    'rep.brandPlaceholder': 'Enter the brand...',
+    'rep.modelPlaceholder': 'Enter the model...',
+    'rep.estPrice': 'Estimated Price:',
+    'rep.chooseCategory': 'Step 1: Select your device category',
+    'rep.estimateDetails': 'Step 2: Provide technical configuration details',
+    'rep.popularServices': 'Our Popular Repair Solutions',
+
+    'acc.title': 'OUR ONLINE ACCESSORY SHOP',
+    'acc.subtitle': 'A premium curated list of heavy-duty armor phone cases, highly resistant tempered screens, fast cables, and smart charges. Hold online, pay in store.',
+    'acc.search': 'Search items (e.g. iPhone, Charger, Case)...',
+    'acc.all': 'All Accessories',
+    'acc.favorites': 'Your Favourites',
+    'acc.noResults': 'No items matched your search criteria',
+    'acc.secureReserve': 'No payment required today! Pay directly upon collection at our store.',
+
+    'con.title': 'GET IN TOUCH & SECURE AN APPOINTMENT',
+    'con.subtitle': 'Got a technical query or need a specific complex model quoted? Submit our form in a minute or contact our service line directly via phone/WhatsApp.',
+    'con.formTitle': 'Send Us a Message',
+    'con.nameLabel': 'Full Name',
+    'con.namePlaceholder': 'Enter your full name',
+    'con.phoneLabel': 'Phone Number',
+    'con.phonePlaceholder': '+33 6 12 34 56 78',
+    'con.emailLabel': 'E-mail Address',
+    'con.emailPlaceholder': 'name@example.com',
+    'con.deviceLabel': 'Device/Model (Optional)',
+    'con.devicePlaceholder': 'e.g., iPhone 13 Pro Max or MacBook Pro 256GB',
+    'con.remarksLabel': 'Technical Issues / Specific inquiries',
+    'con.remarksPlaceholder': 'Describe your device problem as detailed as possible...',
+    'con.successMsg': 'Thank you! Your inquiry was sent successfully. Our team will contact you very soon.',
+
+    'foot.rights': 'All rights reserved.',
+    'foot.where': 'Our Store Location',
+    'foot.hoursTitle': 'Opening Hours',
+    'foot.links': 'Quick Navigation',
+    'foot.address': '42 Avenue Jean Jaurès, 93350 Le Bourget',
+  },
+  ES: {
+    'nav.accueil': 'Inicio',
+    'nav.reparation': 'Reparaciones',
+    'nav.accessoires': 'Accesorios',
+    'nav.contact': 'Contacto',
+    'nav.serviceNoRdv': 'Servicio sin cita',
+    'nav.hours': 'LUN - JUE: 9:15 - 21:30',
+    'nav.whatsappTitle': 'WHATSAPP: +33 6 44 66 44 04',
+    'nav.subTitle': 'Reparación y Accesorios',
+
+    'btn.learnMore': 'Saber más',
+    'btn.contactUs': 'Contáctenos',
+    'btn.bookRepair': 'Reservar Cita / Presupuesto Gratis',
+    'btn.bookRepairShort': 'Reservar Cita',
+    'btn.discover': 'Descubrir la tienda',
+    'btn.estimation': 'Presupuesto en 30s',
+    'btn.confirmBooking': 'Confirmar mi reserva',
+    'btn.knowMore': 'He tomado nota',
+    'btn.submitForm': 'Enviar solicitud',
+    'btn.addToCart': 'Reservar artículo',
+    'btn.alreadyAdded': 'Ya reservado',
+    'btn.printPDF': 'Imprimir / PDF',
+
+    'banner.freeQuote': 'PRESUPUESTO 100% GRATIS',
+    'banner.repairTime': 'REPARACIÓN EN 30 MIN',
+    'banner.guarantee': '2 MESES DE GARANTÍA',
+    'hero.title': '¡SU MÓVIL REPARADO EN SOLO 30 MINUTOS!',
+    'hero.subtitle': 'Especialista en reparación de móviles, tabletas y ordenadores en Le Bourget. Presupuesto gratis al instante, piezas de calidad y servicio exprés.',
+
+    'section.whyUs': '¿POR QUÉ ELEGIRNOS?',
+    'section.whyUsSub': 'Un servicio prémium diseñado para simplificar la vida de sus dispositivos.',
+    'section.howItWorks': '¿CÓMO FUNCIONA?',
+    'section.howItWorksSub': 'Su proceso de reparación en 4 pasos sencillos y claros.',
+    'section.reviews': 'LO QUE OPINAN NUESTROS CLIENTES',
+    'section.reviewsSub': 'Comentarios reales que avalan nuestro compromiso y rigor.',
+
+    'why.speed': 'Diagnósticos y Reparación Exprés',
+    'why.speedDesc': 'Análisis al instante y reparación en la tienda en menos de 30 minutos para la mayoría de las averías.',
+    'why.quality': 'Componentes de Alta Calidad',
+    'why.qualityDesc': 'Seleccionamos rigurosamente pantallas, cristales y baterías de larga duración.',
+    'why.guarantee': 'Garantía Activa',
+    'why.guaranteeDesc': '¡Recupere su aparato como nuevo! Disfrute de 2 meses de garantía* sobre toda la reparación.',
+    'why.bestPrice': 'Mejor Precio Garantizado',
+    'why.bestPriceDesc': 'Precios transparentes sin costes ocultos, alineados con el mercado con presupuesto completamente gratis.',
+
+    'step.1': 'Diagnóstico Inicial',
+    'step.1Desc': 'Análisis técnico de la avería sin ningún coste asociado.',
+    'step.2': 'Entrega de Dispositivo',
+    'step.2Desc': 'Traiga su dispositivo directamente sin cita o reserve en línea.',
+    'step.3': 'Reparación en Vivo',
+    'step.3Desc': 'Nuestros técnicos cualificados reparan su dispositivo rápidamente.',
+    'step.4': 'Entrega y Garantía',
+    'step.4Desc': 'Pruebas rigurosas previas para asegurar el correcto funcionamiento.',
+
+    'rep.title': 'ESTIMADOR DE TARIFAS DE REPARACIÓN',
+    'rep.subtitle': 'Seleccione su tipo de dispositivo, indique la marca, el modelo exacto y el problema para recibir un presupuesto instantáneo.',
+    'rep.brand': 'Marca del dispositivo',
+    'rep.model': 'Modelo exacto',
+    'rep.issue': 'Tipo de problema',
+    'rep.brandPlaceholder': 'Escriba la marca...',
+    'rep.modelPlaceholder': 'Escriba el modelo...',
+    'rep.estPrice': 'Precio estimado:',
+    'rep.chooseCategory': 'Paso 1: Elija la categoría de su dispositivo',
+    'rep.estimateDetails': 'Paso 2: Especifique los detalles técnicos',
+    'rep.popularServices': 'Nuestros servicios más demandados',
+
+    'acc.title': 'NUESTRA TIENDA DE ACCESORIOS ONLINE',
+    'acc.subtitle': 'Una selección de fundas de alta resistencia, vidrios templados de protección, cargadores rápidos y cables. Reserve online y recoja en tienda.',
+    'acc.search': 'Buscar accesorios (ej. iPhone, Cargador, Funda)...',
+    'acc.all': 'Todos los accesorios',
+    'acc.favorites': 'Favoritos',
+    'acc.noResults': 'Ningún objeto coincide con su búsqueda',
+    'acc.secureReserve': '¡Sin pago online! Pague directamente al recoger su pedido en nuestra tienda.',
+
+    'con.title': 'CONTACTO Y RESERVA DE CITA',
+    'con.subtitle': '¿Tiene dudas o necesita presupuesto? Rellene el formulario en 1 minuto o contacte vía teléfono o WhatsApp.',
+    'con.formTitle': 'Enviarnos un mensaje',
+    'con.nameLabel': 'Nombre completo',
+    'con.namePlaceholder': 'Introduzca su nombre',
+    'con.phoneLabel': 'Teléfono de contacto',
+    'con.phonePlaceholder': '+33 6 12 34 56 78',
+    'con.emailLabel': 'Dirección de correo',
+    'con.emailPlaceholder': 'nombre@ejemplo.com',
+    'con.deviceLabel': 'Dispositivo / Modelo (Opcional)',
+    'con.devicePlaceholder': 'Ej: iPhone 13 Pro o MacBook Pro',
+    'con.remarksLabel': 'Descripción técnica del fallo',
+    'con.remarksPlaceholder': 'Describa detalladamente el problema...',
+    'con.successMsg': '¡Mensaje enviado con éxito! Nuestro equipo le contestará lo antes posible.',
+
+    'foot.rights': 'Todos los derechos reservados.',
+    'foot.where': 'Nuestra Tienda',
+    'foot.hoursTitle': 'Horarios',
+    'foot.links': 'Enlaces directos',
+    'foot.address': '42 Avenue Jean Jaurès, 93350 Le Bourget',
+  },
+  IT: {
+    'nav.accueil': 'Home',
+    'nav.reparation': 'Riparazioni',
+    'nav.accessoires': 'Accessori',
+    'nav.contact': 'Contatti',
+    'nav.serviceNoRdv': 'Senza appuntamento',
+    'nav.hours': 'LUN - GIO: 9:15 - 21:30',
+    'nav.whatsappTitle': 'WHATSAPP: +33 6 44 66 44 04',
+    'nav.subTitle': 'Riparazioni e Accessori',
+
+    'btn.learnMore': 'Saperne di più',
+    'btn.contactUs': 'Contattaci',
+    'btn.bookRepair': 'Prenota Riparazione / Preventivo Gratis',
+    'btn.bookRepairShort': 'Prenota',
+    'btn.discover': 'Scopri il negozio',
+    'btn.estimation': 'Preventivo in 30s',
+    'btn.confirmBooking': 'Conferma prenotazione',
+    'btn.knowMore': 'Preso visione',
+    'btn.submitForm': 'Invia richiesta',
+    'btn.addToCart': 'Prenota articolo',
+    'btn.alreadyAdded': 'Già prenotato',
+    'btn.printPDF': 'Stampa / PDF',
+
+    'banner.freeQuote': 'PREVENTIVO 100% GRATUITO',
+    'banner.repairTime': 'RIPARAZIONE IN 30 MIN',
+    'banner.guarantee': '2 MESI DI GARANZIA',
+    'hero.title': 'IL TUO SMARTPHONE RIPARATO IN SOLO 30 MINUTI!',
+    'hero.subtitle': 'Specialisti della riparazione di smartphone, tablet e computer a Le Bourget. Preventivo gratuito immediato, ricambi di alta qualità e interventi rapidissimi.',
+
+    'section.whyUs': 'PERCHÉ SCEGLIERCI?',
+    'section.whyUsSub': 'Un servizio di qualità superiore progettato per darti la massima tranquillità.',
+    'section.howItWorks': 'COME FUNZIONA?',
+    'section.howItWorksSub': 'Il tuo percorso di riparazione in 4 passaggi semplici e trasparenti.',
+    'section.reviews': 'COSA DICONO I NOSTRI CLIENTI',
+    'section.reviewsSub': 'Recensioni reali che rispecchiano la nostra serietà professionale.',
+
+    'why.speed': 'Diagnosi e Riparazione Rapide',
+    'why.speedDesc': 'Analisi immediata e riparazione in loco in meno di 30 minuti per la maggior parte dei guasti.',
+    'why.quality': 'Componenti di Prima Scelta',
+    'why.qualityDesc': 'Selezioniamo con cura schermi, vetri e batterie certificati per durare a lungo.',
+    'why.guarantee': 'Garanzia Attiva',
+    'why.guaranteeDesc': 'Ritira il tuo dispositivo come nuovo! Offriamo 2 mesi di garanzia* su tutte le riparazioni.',
+    'why.bestPrice': 'Miglior Prezzo Garantito',
+    'why.bestPriceDesc': 'Tariffe chiare senza costi nascosti, in linea con i prezzi di mercato e preventivo gratuito.',
+
+    'step.1': 'Diagnosi Completa',
+    'step.1Desc': 'Analisi della scheda del dispositivo senza alcun costo per te.',
+    'step.2': 'Consegna Dispositivo',
+    'step.2Desc': 'Porta il dispositivo direttamente in negozio o prenota online.',
+    'step.3': 'Riparazione Rapida',
+    'step.3Desc': 'I nostri tecnici qualificati eseguono la riparazione in tempi rapidi.',
+    'step.4': 'Ritiro e Garanzia',
+    'step.4Desc': 'Test di funzionamento finale prima della consegna del dispositivo.',
+
+    'rep.title': 'PREVENTIVO RIPARAZIONE ONLINE',
+    'rep.subtitle': 'Seleziona la categoria, indica la marca, il modello e il difetto per un calcolo rapido dei costi.',
+    'rep.brand': 'Marca dispositivo',
+    'rep.model': 'Modello esatto',
+    'rep.issue': 'Tipo di guasto',
+    'rep.brandPlaceholder': 'Inserisci la marca...',
+    'rep.modelPlaceholder': 'Inserisci il modello...',
+    'rep.estPrice': 'Prezzo stimato:',
+    'rep.chooseCategory': 'Passo 1: Scegli la categoria del dispositivo',
+    'rep.estimateDetails': 'Passo 2: Inserisci i dettagli tecnici',
+    'rep.popularServices': 'I nostri interventi più popolari',
+
+    'acc.title': 'NEGOZIO ACCESSORI ONLINE',
+    'acc.subtitle': 'Una vasta gamma di cover protettive rinforzate, pellicole in vetro temperato, alimentatori e cavi rapidi. Prenota online e ritira in negozio.',
+    'acc.search': 'Cerca accessori (es. iPhone, Caricatore, Custodia)...',
+    'acc.all': 'Tutti gli accessori',
+    'acc.favorites': 'Preferiti',
+    'acc.noResults': 'Nessun articolo corrisponde alla tua ricerca',
+    'acc.secureReserve': 'Nessun pagamento online! Paghi solo al momento del ritiro in negozio.',
+
+    'con.title': 'CONTATTACI E PRENOTA UN APPUNTAMENTO',
+    'con.subtitle': 'Domande o richieste particolari? Compila il form in un minuto o scrivici su WhatsApp o telefono.',
+    'con.formTitle': 'Invia un messaggio',
+    'con.nameLabel': 'Nome completo',
+    'con.namePlaceholder': 'Inserisci il tuo nome',
+    'con.phoneLabel': 'Numero di telefono',
+    'con.phonePlaceholder': '+33 6 12 34 56 78',
+    'con.emailLabel': 'Indirizzo E-mail',
+    'con.emailPlaceholder': 'nome@esempio.com',
+    'con.deviceLabel': 'Dispositivo / Modello (Opzionale)',
+    'con.devicePlaceholder': 'Es: iPhone 13 Pro o MacBook Pro',
+    'con.remarksLabel': 'Dettagli sul guasto riscontrato',
+    'con.remarksPlaceholder': 'Descrivi qui il tuo problema...',
+    'con.successMsg': 'Messaggio inviato correttamente! Ti contatteremo il prima possibile.',
+
+    'foot.rights': 'Tutti i diritti riservati.',
+    'foot.where': 'Dove siamo',
+    'foot.hoursTitle': 'Orari di Apertura',
+    'foot.links': 'Collegamenti rapidi',
+    'foot.address': '42 Avenue Jean Jaurès, 93350 Le Bourget',
+  },
+  RU: {
+    'nav.accueil': 'Главная',
+    'nav.reparation': 'Ремонт',
+    'nav.accessoires': 'Аксессуары',
+    'nav.contact': 'Контакты',
+    'nav.serviceNoRdv': 'Без записи',
+    'nav.hours': 'ПН - ЧТ: 9:15 - 21:30',
+    'nav.whatsappTitle': 'WHATSAPP: +33 6 44 66 44 04',
+    'nav.subTitle': 'Ремонт и аксессуары',
+
+    'btn.learnMore': 'Подробнее',
+    'btn.contactUs': 'Связаться',
+    'btn.bookRepair': 'Записаться на ремонт / Расчет бесплатно',
+    'btn.bookRepairShort': 'Записаться',
+    'btn.discover': 'Перейти в магазин',
+    'btn.estimation': 'Оценка за 30 сек',
+    'btn.confirmBooking': 'Подтвердить заказ',
+    'btn.knowMore': 'Я понял',
+    'btn.submitForm': 'Отправить заявку',
+    'btn.addToCart': 'Забронировать товар',
+    'btn.alreadyAdded': 'Уже забронировано',
+    'btn.printPDF': 'Печать / PDF',
+
+    'banner.freeQuote': '100% БЕСПЛАТНЫЙ РАСЧЕТ',
+    'banner.repairTime': 'РЕМОНТ ЗА 30 МИНУТ',
+    'banner.guarantee': 'ГАРАНТИЯ 2 МЕСЯЦА',
+    'hero.title': 'РЕМОНТ ВАШЕГО СМАРТФОНА ЗА 30 МИНУТ!',
+    'hero.subtitle': 'Профессиональный ремонт смартфонов, планшетов и ноутбуков в Ле Бурже. Быстрая оценка, оригинальные детали и высокое качество.',
+
+    'section.whyUs': 'ПОЧЕМУ МЫ?',
+    'section.whyUsSub': 'Премиум-сервис, созданный для быстрого восстановления ваших гаджетов.',
+    'section.howItWorks': 'КАК ЭТО РАБОТАЕТ?',
+    'section.howItWorksSub': 'Простой процесс ремонта мобильной техники в 4 прозрачных шага.',
+    'section.reviews': 'ОТЗЫВЫ НАШИХ КЛИЕНТОВ',
+    'section.reviewsSub': 'Реальные мнения людей, подтверждающие наш высокий профессионализм.',
+
+    'why.speed': 'Быстрая экспресс-оценка',
+    'why.speedDesc': 'Мгновенная диагностика и устранение неисправностей на месте в течение получаса.',
+    'why.quality': 'Качественные запчасти',
+    'why.qualityDesc': 'Мы используем сертифицированные экраны, тачскрины и аккумуляторы высокой прочности.',
+    'why.guarantee': 'Действующая гарантия',
+    'why.guaranteeDesc': 'Заберите обновленный прибор бесплатно! Предоставляем 2 месяца гарантии на ремонт.',
+    'why.bestPrice': 'Лучшие цены гарантированы',
+    'why.bestPriceDesc': 'Честные цены без скрытых доплат. Бесплатный запуск диагностики на устройства.',
+
+    'step.1': 'Диагностика',
+    'step.1Desc': 'Полный технический анализ устройства без каких-либо затрат.',
+    'step.2': 'Прием устройства',
+    'step.2Desc': 'Принесите девайс в магазин без записи или забронируйте онлайн.',
+    'step.3': 'Ремонт на месте',
+    'step.3Desc': 'Опытные специалисты выполняют бережный ремонт любой сложности.',
+    'step.4': 'Сдача и чек',
+    'step.4Desc': 'Проверка работоспособности комплектующих перед получением.',
+
+    'rep.title': 'ОНЛАЙН-КАЛЬКУЛЯТОР СТОИМОСТИ',
+    'rep.subtitle': 'Выберите категорию, укажите бренд, модель и дефект, чтобы узнать точную стоимость ремонта.',
+    'rep.brand': 'Производитель',
+    'rep.model': 'Модель',
+    'rep.issue': 'Характер поломки',
+    'rep.brandPlaceholder': 'Введите бренд...',
+    'rep.modelPlaceholder': 'Введите модель...',
+    'rep.estPrice': 'Ориентировочно:',
+    'rep.chooseCategory': 'Шаг 1: Выберите тип устройства',
+    'rep.estimateDetails': 'Шаг 2: Укажите технические параметры',
+    'rep.popularServices': 'Популярные виды ремонта',
+
+    'acc.title': 'НАШ ИНТЕРНЕТ-МАГАЗИН АКСЕССУАРОВ',
+    'acc.subtitle': 'Качественные бронечехлы, защитные стекла, быстрые зарядные блоки и провода напрямую. Бронь онлайн, оплата при получении.',
+    'acc.search': 'Поиск товаров (например, iPhone, Зарядка, Чехол)...',
+    'acc.all': 'Все аксессуары',
+    'acc.favorites': 'Избранное',
+    'acc.noResults': 'Товаров по вашему запросу не найдено',
+    'acc.secureReserve': 'Оплата при получении напрямую в магазине Ле Бурже.',
+
+    'con.title': 'СВЯЗАТЬСЯ С НАМИ И ЗАПИСАТЬСЯ',
+    'con.subtitle': 'Возникли вопросы или нужен индивидуальный расчет? Заполните форму за 1 минуту или напишите нам в WhatsApp.',
+    'con.formTitle': 'Отправить сообщение',
+    'con.nameLabel': 'Ваше имя',
+    'con.namePlaceholder': 'Введите имя и фамилию',
+    'con.phoneLabel': 'Номер телефона',
+    'con.phonePlaceholder': '+33 6 12 34 56 78',
+    'con.emailLabel': 'Электронная почта',
+    'con.emailPlaceholder': 'name@example.com',
+    'con.deviceLabel': 'Устройство / Модель (Опционально)',
+    'con.devicePlaceholder': 'Например: iPhone 13 Pro или MacBook Pro',
+    'con.remarksLabel': 'Подробное описание неисправности',
+    'con.remarksPlaceholder': 'Опишите характер повреждений...',
+    'con.successMsg': 'Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.',
+
+    'foot.rights': 'Все права защищены.',
+    'foot.where': 'Как нас найти',
+    'foot.hoursTitle': 'Часы работы',
+    'foot.links': 'Быстрые ссылки',
+    'foot.address': '42 Avenue Jean Jaurès, 93350 Le Bourget',
+  },
+  AR: {
+    'nav.accueil': 'الرئيسية',
+    'nav.reparation': 'الإصلاحات',
+    'nav.accessoires': 'الإكسسوارات',
+    'nav.contact': 'اتصل بنا',
+    'nav.serviceNoRdv': 'خدمة بدون موعد',
+    'nav.hours': 'من الاثنين إلى الخميس: 9:15 - 21:30',
+    'nav.whatsappTitle': 'واتساب: +33 6 44 66 44 04',
+    'nav.subTitle': 'إصلاح وإكسسوارات الهواتف',
+
+    'btn.learnMore': 'المزيد',
+    'btn.contactUs': 'اتصل بنا',
+    'btn.bookRepair': 'احجز موعدًا / تسعيرة مجانية',
+    'btn.bookRepairShort': 'احجز الآن',
+    'btn.discover': 'اكتشف المتجر',
+    'btn.estimation': 'احصل على تسعيرة خلال 30 ثانية',
+    'btn.confirmBooking': 'تأكيد الحجز',
+    'btn.knowMore': 'لقد قرأت الشروط',
+    'btn.submitForm': 'إرسال الطلب',
+    'btn.addToCart': 'حجز هذا المنتج',
+    'btn.alreadyAdded': 'محجوز بالفعل',
+    'btn.printPDF': 'طباعة الشروط / PDF',
+
+    'banner.freeQuote': 'تسعيرة مجانية 100%',
+    'banner.repairTime': 'إصلاح خلال 30 دقيقة فقط',
+    'banner.guarantee': 'ضمان لمدة شهرين',
+    'hero.title': 'إصلاح هاتفك الذكي في 30 دقيقة فقط!',
+    'hero.subtitle': 'أخصائيون في إصلاح الهواتف الذكية، الأجهزة اللوحية، وأجهزة الكمبيوتر في لو بورجيه. تسعيرة فورية مجانية، قطع غيار عالية الجودة، وإصلاح فائق السرعة.',
+
+    'section.whyUs': 'لماذا تختارنا؟',
+    'section.whyUsSub': 'خدمة ممتازة مصممة لجعل عملية صيانة جهازك سهلة ومريحة.',
+    'section.howItWorks': 'كيف تسير العملية؟',
+    'section.howItWorksSub': 'خطوات إصلاح جهازك في 4 مراحل بسيطة وشفافة بالكامل.',
+    'section.reviews': 'ماذا يقول عملاؤنا؟',
+    'section.reviewsSub': 'آراء حقيقية تعكس مدى التزامنا واحترافيتنا.',
+
+    'why.speed': 'فحص وإصلاح سريع للغاية',
+    'why.speedDesc': 'فحص فوري للخلل وإصلاح في المتجر في أقل من 30 دقيقة لمعظم الأعطال.',
+    'why.quality': 'قطع غيار عالية الجودة',
+    'why.qualityDesc': 'نختار بدقة شاشات، زجاج حماية، وبطاريات معتمدة لتدوم طويلاً.',
+    'why.guarantee': 'الضمان مفعل',
+    'why.guaranteeDesc': 'استعد جهازك كالجديد تمامًا! نوفر لك ضمانًا لمدة شهرين على كل إصلاح.',
+    'why.bestPrice': 'أفضل الأسعار مضمونة',
+    'why.bestPriceDesc': 'أسعار واضحة بدون رسوم مخفية، مطابقة لأسعار السوق مع تقديم فحص مجاني.',
+
+    'step.1': 'تشخيص العطل',
+    'step.1Desc': 'تحليل كامل وفحص شامل للعطل مجانًا بنسبة 100%.',
+    'step.2': 'تسليم الجهاز',
+    'step.2Desc': 'تفضل بزيارتنا في المتجر بدون موعد مسبق أو احجز عبر الإنترنت.',
+    'step.3': 'إصلاح سريع',
+    'step.3Desc': 'عملية الإصلاح تتم على أيدي فنيين مؤهلين وأمام عينيك.',
+    'step.4': 'الاستلام والضمان',
+    'step.4Desc': 'اختبارات دقيقة للتأكد من عمل جميع ميزات الجهاز بشكل ممتاز.',
+
+    'rep.title': 'حاسبة أسعار الإصلاح الفورية',
+    'rep.subtitle': 'اختر فئة جهازك، حدد الشركة المصنعة، الموديل بالضبط ونوع العطل لتلقي تقدير فوري.',
+    'rep.brand': 'جهة تصنيع الجهاز',
+    'rep.model': 'الموديل الدقيق',
+    'rep.issue': 'نوع العطل أو المشكلة',
+    'rep.brandPlaceholder': 'اكتب ماركة الجهاز...',
+    'rep.modelPlaceholder': 'اكتب موديل الجهاز الدقيق...',
+    'rep.estPrice': 'السعر التقديري:',
+    'rep.chooseCategory': 'الخطوة 1: اختر نوع جهازك',
+    'rep.estimateDetails': 'الخطوة 2: حدد التفاصيل والمشكلة',
+    'rep.popularServices': 'خدمات الإصلاح الشائعة لدينا',
+
+    'acc.title': 'متجرنا الإلكتروني للإكسسوارات',
+    'acc.subtitle': 'مجموعة ممتازة من كفرات الحماية المقاومة، زجاج المقاوم للكسر، كابلات شحن وشواحن سريعة. احجز عبر الإنترنت واستلم في المتجر.',
+    'acc.search': 'ابحث عن إكسسوار (مثال: آيفون، شاحن، كفر)...',
+    'acc.all': 'جميع الملحقات',
+    'acc.favorites': 'المفضلة لديك',
+    'acc.noResults': 'لا توجد نتائج تطابق بحثك',
+    'acc.secureReserve': 'لا حاجة للدفع عبر الإنترنت! ستدفع مباشرة عند استلام طلبك من المتجر.',
+
+    'con.title': 'اتصل بنا واحجز موعدًا',
+    'con.subtitle': 'لديك سؤال أو تحتاج إلى تقدير خاص؟ املأ النموذج في دقيقة أو تواصل معنا عبر الواتساب أو الهاتف.',
+    'con.formTitle': 'أرسل لنا رسالة',
+    'con.nameLabel': 'الاسم الكامل',
+    'con.namePlaceholder': 'أدخل اسمك الكامل',
+    'con.phoneLabel': 'رقم الهاتف',
+    'con.phonePlaceholder': '+33 6 12 34 56 78',
+    'con.emailLabel': 'البريد الإلكتروني',
+    'con.emailPlaceholder': 'name@example.com',
+    'con.deviceLabel': 'الجهاز / الموديل (اختياري)',
+    'con.devicePlaceholder': 'مثال: آيفون 13 برو ماكس أو ماك بوك برو',
+    'con.remarksLabel': 'تفاصيل المشكلة أو العطل',
+    'con.remarksPlaceholder': 'يرجى كتابة وصف دقيق للمشكلة التي تواجهها...',
+    'con.successMsg': 'تم إرسال رسالتك بنجاح! سيتواصل معك فريقنا في أقرب وقت ممكن.',
+
+    'foot.rights': 'جميع الحقوق محفوظة.',
+    'foot.where': 'موقعنا في لو بورجيه',
+    'foot.hoursTitle': 'أوقات العمل',
+    'foot.links': 'روابط سريعة',
+    'foot.address': '42 Avenue Jean Jaurès, 93350 Le Bourget',
+  }
+};
+
+export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  // Try to load initial language from localStorage or default to French (FR)
+  const [language, setLanguageState] = useState<Language>(() => {
+    const saved = localStorage.getItem('mobicure_lang');
+    return (saved as Language) || 'FR';
+  });
+
+  const setLanguage = (lang: Language) => {
+    setLanguageState(lang);
+    localStorage.setItem('mobicure_lang', lang);
+  };
+
+  const t = (key: string): string => {
+    const langDict = translations[language] || translations['FR'];
+    return langDict[key] || translations['FR'][key] || key;
+  };
+
+  const isRtl = language === 'AR';
+
+  useEffect(() => {
+    // Set text direction on root html element
+    document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+    document.documentElement.lang = language.toLowerCase();
+  }, [language, isRtl]);
+
+  return (
+    <LanguageContext.Provider value={{ language, setLanguage, t, isRtl }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+};
+
+export const useLanguage = () => {
+  const context = useContext(LanguageContext);
+  if (!context) {
+    throw new Error('useLanguage must be used within a LanguageProvider');
+  }
+  return context;
+};

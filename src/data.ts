@@ -10,7 +10,7 @@ export const repairCategories: DeviceCategory[] = [
       {
         id: 'sp-screen',
         name: 'Changement d\'Écran ou Vitre',
-        price: 'À partir de 49€',
+        price: 'À partit de 39€',
         duration: '30 min',
         description: 'Remplacement de bloc écran d\'origine (LCD/OLED) suite à une casse ou un défaut d\'affichage.'
       },
