@@ -86,6 +86,7 @@ const translations: Record<Language, Record<string, string>> = {
     'rep.popularServices': 'Nos services de réparation populaires',
     
     // Accessories Screen
+    'acc.badge': 'ACCESSOIRES D\'ORIGINE OU COMPATIBLE',
     'acc.title': 'NOTRE BOUTIQUE D\'ACCESSOIRES EN LIGNE',
     'acc.subtitle': 'Une sélection premium de coques de protection renforcées, de vitres trempées haute résistance, de câbles et de chargeurs rapides. Réservez en ligne et récupérez vos articles en boutique.',
     'acc.search': 'Rechercher un accessoire (ex: iPhone, Chargeur, Coque)...',
@@ -183,6 +184,7 @@ const translations: Record<Language, Record<string, string>> = {
     'rep.estimateDetails': 'Step 2: Provide technical configuration details',
     'rep.popularServices': 'Our Popular Repair Solutions',
 
+    'acc.badge': 'ORIGINAL OR COMPATIBLE ACCESSORIES',
     'acc.title': 'OUR ONLINE ACCESSORY SHOP',
     'acc.subtitle': 'A premium curated list of heavy-duty armor phone cases, highly resistant tempered screens, fast cables, and smart charges. Hold online, pay in store.',
     'acc.search': 'Search items (e.g. iPhone, Charger, Case)...',
@@ -278,6 +280,7 @@ const translations: Record<Language, Record<string, string>> = {
     'rep.estimateDetails': 'Paso 2: Especifique los detalles técnicos',
     'rep.popularServices': 'Nuestros servicios más demandados',
 
+    'acc.badge': 'ACCESORIOS ORIGINALES O COMPATIBLES',
     'acc.title': 'NUESTRA TIENDA DE ACCESORIOS ONLINE',
     'acc.subtitle': 'Una selección de fundas de alta resistencia, vidrios templados de protección, cargadores rápidos y cables. Reserve online y recoja en tienda.',
     'acc.search': 'Buscar accesorios (ej. iPhone, Cargador, Funda)...',
@@ -373,6 +376,7 @@ const translations: Record<Language, Record<string, string>> = {
     'rep.estimateDetails': 'Passo 2: Inserisci i dettagli tecnici',
     'rep.popularServices': 'I nostri interventi più popolari',
 
+    'acc.badge': 'ACCESSORI ORIGINALI O COMPATIBILI',
     'acc.title': 'NEGOZIO ACCESSORI ONLINE',
     'acc.subtitle': 'Una vasta gamma di cover protettive rinforzate, pellicole in vetro temperato, alimentatori e cavi rapidi. Prenota online e ritira in negozio.',
     'acc.search': 'Cerca accessori (es. iPhone, Caricatore, Custodia)...',
@@ -468,6 +472,7 @@ const translations: Record<Language, Record<string, string>> = {
     'rep.estimateDetails': 'Шаг 2: Укажите технические параметры',
     'rep.popularServices': 'Популярные виды ремонта',
 
+    'acc.badge': 'ОРИГИНАЛЬНЫЕ И СОВМЕСТИМЫЕ АКСЕССУАРЫ',
     'acc.title': 'НАШ ИНТЕРНЕТ-МАГАЗИН АКСЕССУАРОВ',
     'acc.subtitle': 'Качественные бронечехлы, защитные стекла, быстрые зарядные блоки и провода напрямую. Бронь онлайн, оплата при получении.',
     'acc.search': 'Поиск товаров (например, iPhone, Зарядка, Чехол)...',
@@ -563,6 +568,7 @@ const translations: Record<Language, Record<string, string>> = {
     'rep.estimateDetails': 'الخطوة 2: حدد التفاصيل والمشكلة',
     'rep.popularServices': 'خدمات الإصلاح الشائعة لدينا',
 
+    'acc.badge': 'إكسسوارات أصلية أو متوافقة',
     'acc.title': 'متجرنا الإلكتروني للإكسسوارات',
     'acc.subtitle': 'مجموعة ممتازة من كفرات الحماية المقاومة، زجاج المقاوم للكسر، كابلات شحن وشواحن سريعة. احجز عبر الإنترنت واستلم في المتجر.',
     'acc.search': 'ابحث عن إكسسوار (مثال: آيفون، شاحن، كفر)...',

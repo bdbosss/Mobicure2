@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ShoppingBag, Search, Filter, Check, Tag, Info, Heart, ArrowRight } from 'lucide-react';
 import { accessoriesItems } from '../data';
 import { AccessoryItem } from '../types';
+import { useLanguage } from '../lib/LanguageContext';
 
 interface AccessoiresProps {
   setActiveTab: (tab: string) => void;
@@ -11,6 +12,7 @@ interface AccessoiresProps {
 }
 
 export default function Accessoires({ setActiveTab, onAddToCart, favorites, onToggleFavorite }: AccessoiresProps) {
+  const { t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'smartphones' | 'tablets' | 'computers'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
@@ -37,7 +39,7 @@ export default function Accessoires({ setActiveTab, onAddToCart, favorites, onTo
       <section className="bg-zinc-50 border-b border-zinc-100 py-12 text-center">
         <div className="max-w-7xl mx-auto px-4 flex flex-col items-center gap-3">
           <div className="bg-red-100 text-red-650 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
-            Accessoires certifiés d'origine & sur-mesure
+            {t('acc.badge')}
           </div>
           <h1 className="text-3xl sm:text-5xl font-extrabold text-zinc-950">
             Boutique <span className="text-red-600">Accessoires</span>

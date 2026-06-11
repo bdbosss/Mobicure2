@@ -49,7 +49,7 @@ export default function Reparation({ setActiveTab, setPreselectedDevice }: Repar
     const isApple = brandLower.includes('apple') || brandLower.includes('iphone') || brandLower.includes('ipad') || brandLower.includes('mac');
     if (selectedCategory === 'smartphones') {
       if (estimatorIssue === 'Vitre / Écran cassé') {
-        return isApple ? 'À partir de 69€' : 'À partir de 59€';
+        return isApple ? 'À partir de 69€' : 'À partir de 39€';
       }
       if (estimatorIssue === 'Batterie à remplacer') {
         return '39€ - 59€';
