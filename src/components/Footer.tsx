@@ -106,12 +106,12 @@ export default function Footer({ setActiveTab }: FooterProps) {
             </a>
 
             <a 
-              href="mailto:contact@mobicure.fr" 
+              href="mailto:mobicure93@gmail.com" 
               className="flex items-center gap-2.5 hover:text-red-500 transition-colors"
               id="footer-email-link"
             >
               <Mail className="w-4 h-4 text-red-600 shrink-0" />
-              <span>contact@mobicure.fr</span>
+              <span>mobicure93@gmail.com</span>
             </a>
 
             {/* Red WhatsApp CTA for fast queries */}

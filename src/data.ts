@@ -10,7 +10,7 @@ export const repairCategories: DeviceCategory[] = [
       {
         id: 'sp-screen',
         name: 'Changement d\'Écran ou Vitre',
-        price: 'À partit de 39€',
+        price: 'À partir de 25€',
         duration: '30 min',
         description: 'Remplacement de bloc écran d\'origine (LCD/OLED) suite à une casse ou un défaut d\'affichage.'
       },
@@ -81,7 +81,7 @@ export const repairCategories: DeviceCategory[] = [
       {
         id: 'tb-buttons',
         name: 'Boutons Volume / Power',
-        price: 'À partir de 35€',
+        price: 'À partir de 39€',
         duration: '30 min',
         description: 'Réparation des nappes de boutons coincés ou inactifs.'
       }
@@ -103,7 +103,7 @@ export const repairCategories: DeviceCategory[] = [
       {
         id: 'pc-thermal',
         name: 'Dépoussiérage & Pâte Thermique',
-        price: '49€',
+        price: '39€',
         duration: '45 min',
         description: 'Votre ventilateur fait du bruit ou l\'ordinateur chauffe ? Solution complète anti-surchauffe.'
       },
@@ -245,7 +245,7 @@ export const accessoriesItems: AccessoryItem[] = [
 export const businessHours = [
   { day: 'Lundi - Jeudi', hours: '09:15 - 21:30' },
   { day: 'Vendredi', hours: "09:15 - 13:00\n14:00 - 21:30" },
-  { day: "Samedi\nDimanche", hours: "09:30 - 21:00" }
+  { day: "Samedi & Dimanche", hours: "09:30 - 21:00" }
 ];
 
 export const clientReviews = [

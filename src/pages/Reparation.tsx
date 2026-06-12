@@ -33,7 +33,8 @@ export default function Reparation({ setActiveTab, setPreselectedDevice }: Repar
       { brand: 'Apple', models: ['MacBook Pro (M1/M2/M3)', 'MacBook Air (M1/M2/M3)', 'iMac'] },
       { brand: 'ASUS', models: ['ZenBook', 'VivoBook', 'ROG Gaming'] },
       { brand: 'Lenovo', models: ['ThinkPad', 'IdeaPad'] },
-      { brand: 'HP / Dell', models: ['HP Pavillion', 'HP Envy', 'Dell XPS', 'Dell Latitude'] }
+      { brand: 'HP / Dell', models: ['HP Pavillion', 'HP Envy', 'Dell XPS', 'Dell Latitude'] },
+      { brand: 'Autres', models: ['DELL', 'Ordinateur générique'] }
     ]
   };
 
@@ -49,35 +50,35 @@ export default function Reparation({ setActiveTab, setPreselectedDevice }: Repar
     const isApple = brandLower.includes('apple') || brandLower.includes('iphone') || brandLower.includes('ipad') || brandLower.includes('mac');
     if (selectedCategory === 'smartphones') {
       if (estimatorIssue === 'Vitre / Écran cassé') {
-        return isApple ? 'À partir de 69€' : 'À partir de 39€';
+        return isApple ? 'À partir de 69€' : 'À partir de 25€';
       }
       if (estimatorIssue === 'Batterie à remplacer') {
         return '39€ - 59€';
       }
-      return '35€ - 49€';
+      return 'À partir de 25€';
     } 
     
     if (selectedCategory === 'tablets') {
       if (estimatorIssue === 'Vitre / Écran cassé') {
-        return 'À partir de 89€';
+        return 'À partir de 39€';
       }
       if (estimatorIssue === 'Batterie à remplacer') {
         return '59€ - 79€';
       }
-      return '49€ - 69€';
+      return 'À partir de 39€';
     }
 
     // Computers
     if (estimatorIssue === 'Vitre / Écran cassé') {
-      return 'À partir de 129€';
+      return 'À partir de 39€';
     }
     if (estimatorIssue === 'Batterie à remplacer') {
       return '89€ - 119€';
     }
     if (estimatorIssue === 'Nettoyage & Pâte Thermique') {
-      return '49€';
+      return '39€';
     }
-    return 'Dès 59€';
+    return 'À partir de 39€';
   };
 
   const getEstimatedDuration = () => {
