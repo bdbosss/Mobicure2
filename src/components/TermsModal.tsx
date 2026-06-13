@@ -349,15 +349,7 @@ export default function TermsModal({ isOpen, onClose }: TermsModalProps) {
                   MOBICURE n’est responsable qu’en cas de faute prouvée, et uniquement pour les dommages directs. Aucune responsabilité n’est acceptée pour les pertes de données, pertes d’exploitation, préjudices commerciaux ou indirects.
                 </p>
 
-                {/* Section 11 */}
-                <h2 className="text-base font-extrabold text-zinc-950 uppercase tracking-wider border-b border-red-600 pb-1 mt-6 mb-3">
-                  DROIT APPLICABLE – MÉDIATION :
-                </h2>
-                <p>
-                  Les présentes sont soumises au droit français. En cas de litige, les tribunaux français sont compétents. Vous pouvez saisir un médiateur de la consommation après avoir contacté le service client.
-                </p>
-
-                {/* Section 12 (Annexe) */}
+                {/* Section 11 (Annexe) */}
                 <h2 className="text-base font-extrabold text-zinc-950 uppercase tracking-wider border-b border-red-600 pb-1 mt-6 mb-3">
                   Annexe simplifiée – Pertes de fonctionnalités possibles (exemples pour iPhone) :
                 </h2>
