@@ -377,16 +377,9 @@ export default function Reparation({ setActiveTab, setPreselectedDevice }: Repar
           </div>
 
           <div className="border border-zinc-150 p-6 rounded-xl text-left bg-white">
-            <h4 className="font-bold text-sm text-zinc-950">Que se passe-t-il si mon appareil est jugé non-réparable ?</h4>
-            <p className="text-xs text-zinc-500 mt-2 leading-relaxed">
-              Si, suite à notre diagnostic gratuit, il s'avère qu'un appareil souffre d'un défaut critique (carte mère broyée, processeur endommagé), nous vous l'indiquons sans vous réclamer le moindre frais de dossier.
-            </p>
-          </div>
-
-          <div className="border border-zinc-150 p-6 rounded-xl text-left bg-white">
             <h4 className="font-bold text-sm text-zinc-950">Quelle est la durée de la garantie MOBICURE ?</h4>
             <p className="text-xs text-zinc-500 mt-2 leading-relaxed">
-              Toutes nos réparations d'écrans de smartphone, de tablettes, et de batterie de PC portables sont accompagnées d'une garantie claire de 3 à 12 mois couvrant n'importe quel défaut matériel ou anomalie de fonctionnement.
+              Toutes nos réparations d'écrans de smartphone, de tablettes, et de batterie de PC portables sont accompagnées d'une garantie claire de 2 mois couvrant sur la pièces qui a étais répare chez nous.
             </p>
           </div>
         </div>

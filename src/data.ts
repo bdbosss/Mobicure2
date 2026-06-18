@@ -24,7 +24,7 @@ export const repairCategories: DeviceCategory[] = [
       {
         id: 'sp-charge',
         name: 'Connecteur de Charge',
-        price: 'À partir de 39€',
+        price: 'À PARTIR DE 25€',
         duration: '30 min',
         description: 'Difficulté à insérer le câble ou faux contacts lors de la charge de votre appareil.'
       },
