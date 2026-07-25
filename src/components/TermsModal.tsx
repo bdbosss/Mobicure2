@@ -304,7 +304,7 @@ export default function TermsModal({ isOpen, onClose }: TermsModalProps) {
                   GARANTIE DES RÉPARATIONS :
                 </h2>
                 <ul className="list-disc pl-5 space-y-1 mb-3">
-                  <li><strong>2 mois</strong> pour toutes les réparations (uniquement pour les pièces compatibles).</li>
+                  <li><strong>2 mois</strong> pour les réparations (uniquement pour les pièces compatibles).</li>
                   <li><strong>MOBICURE ne propose aucune garantie</strong> pour les pièces Originales. Donc, vous devez vérifier le bon fonctionnement de l’appareil avant de quitter le Magasin.</li>
                   <li>Couvre uniquement la <strong>même panne</strong>, dans des conditions normales d’utilisation.</li>
                   <li>Exclusions : eau, chocs, chaleur, intervention externe, utilisation anormale.</li>
